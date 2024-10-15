@@ -1,0 +1,52 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          String       @id @default(uuid())
+  name        String       @unique
+  email       String       @unique
+  provider    Provider
+  submissions Submission[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+enum Provider {
+  GOOGLE
+  GITHUB
+  GUEST
+}
+
+model Submission {
+  id        String           @id @default(uuid())
+  userId    String
+  code      String
+  language  Language
+  status    SubmissionStatus
+  result    String?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  User      User             @relation(fields: [userId], references: [id])
+}
+
+enum SubmissionStatus {
+  PENDING
+  UNDER_EXECUTION
+  COMPLETED
+  ERROR
+}
+
+enum Language {
+  PYTHON
+  JAVASCRIPT
+  TYPESCRIPT
+  CPP
+  C
+  JAVA
+}
