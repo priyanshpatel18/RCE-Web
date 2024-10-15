@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { User } from "@/hooks/useUser";
-import { Provider } from "@prisma/client";
+import { Provider } from "@/packages/database";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { Dispatch, FormEvent, SetStateAction, useRef, useState } from "react";

@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm run db:generate && next build",
     "start": "next start",
     "lint": "next lint",
     "db": "pnpm run db:generate && pnpm run db:migrate && pnpm run db:push",
