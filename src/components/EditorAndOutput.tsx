@@ -86,12 +86,10 @@ export default function EditorOutput({
   }
 
   return (
-    <div className="flex h-full bg-gradient-to-r from-gray-900 to-gray-950 overflow-hidden">
+    <div className="flex flex-col lg:flex-row h-full lg:h-screen bg-gradient-to-r from-gray-900 to-gray-950 overflow-hidden">
       {/* Code Editor */}
-      <div className="w-1/2 flex flex-col border-r border-gray-700">
+      <div className="w-full h-1/2 lg:h-full lg:w-1/2 flex-grow border-b lg:border-b-0 lg:border-r border-gray-700">
         <Editor
-          height="100%"
-          defaultValue="print('Hello, World!')"
           language={selectedLanguage.toLowerCase()}
           theme="vs-dark"
           onMount={handleEditorDidMount}
@@ -101,18 +99,19 @@ export default function EditorOutput({
             wordWrap: "on",
             autoDetectHighContrast: false,
           }}
+          value={`# Write your code here\n`}
+          className="w-full h-full"
         />
       </div>
 
       {/* Output Section */}
-      <div className="flex flex-col w-1/2 p-6 bg-gray-900 bg-opacity-80 border-l border-gray-800 rounded-md backdrop-blur-md">
+      <div className="w-full h-1/2 lg:h-full lg:w-1/2 flex flex-col p-6 bg-gray-900 bg-opacity-80 border-t lg:border-t-0 lg:border-l border-gray-800 rounded-md backdrop-blur-md">
         {/* Run Button */}
         <button
           className={`px-6 h-12 rounded-lg text-white transition-all duration-300 shadow-md ${
             loading ? "bg-gray-600" : "bg-indigo-700 hover:bg-indigo-500"
           } disabled:bg-gray-600`}
           onClick={handleRunCode}
-          // disabled={loading || !isSignedIn}
         >
           {loading ? (
             <span className="animate-pulse">Running...</span>
@@ -127,7 +126,7 @@ export default function EditorOutput({
         </h3>
 
         {/* Output Box */}
-        <pre className="flex-grow overflow-hidden p-4 bg-gray-800 bg-opacity-80 border border-gray-700 rounded-lg text-white shadow-inner">
+        <pre className="flex-grow overflow-auto p-4 bg-gray-800 bg-opacity-80 border border-gray-700 rounded-lg text-white shadow-inner">
           {(typeof output === "string" && cleanOutput(output)) ||
             "No output yet"}
         </pre>
